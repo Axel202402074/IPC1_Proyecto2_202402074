@@ -1,17 +1,46 @@
-
 package Vista;
 
 import Controlador.ControladorRegistroCliente;
+import Modelo.Automovil;
 import Modelo.RegistroCliente;
+import Vista.VistaEditarClienteAuto;
+import java.io.BufferedReader;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileReader;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
 
 public class VistaClientesAutos extends javax.swing.JFrame {
 
-   
     public VistaClientesAutos() {
         initComponents();
         this.setTitle("Clientes y automóviles");
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
+        cargarClientesTabla();
+        cargarClientesComboBox();
+        inicializarTablaVehiculos();
+    }
+
+    private void cargarClientesTabla() {
+        String[] columnas = {"DPI", "Nombre", "Usuario"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(null, columnas);
+        for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
+            String[] fila = {
+                cliente.getDpi(),
+                cliente.getNombre(),
+                cliente.getNombreUsuario()
+            };
+            modelo.addRow(fila);
+        }
+        tblDatos.setModel(modelo);
+    }
+
+    private void cargarClientesComboBox() {
+        boxCliente.removeAllItems();
+        for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
+            boxCliente.addItem(cliente.getDpi() + " - " + cliente.getNombre());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -28,16 +57,11 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnModificar1 = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtMatricula = new javax.swing.JTextField();
-        txtMarca = new javax.swing.JTextField();
-        txtModelo = new javax.swing.JTextField();
-        btnRegistrar = new javax.swing.JButton();
-        btnVerAutos = new javax.swing.JButton();
+        boxCliente = new javax.swing.JComboBox<>();
+        btnBuscarVehiculos = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblVehiculos = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jTextField4.setText("jTextField1");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -103,130 +127,59 @@ public class VistaClientesAutos extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Automovil");
+        boxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Matricula");
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Marca");
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Modelo");
-
-        txtMatricula.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarVehiculos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBuscarVehiculos.setForeground(new java.awt.Color(0, 0, 0));
+        btnBuscarVehiculos.setText("Buscar vehiculos");
+        btnBuscarVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatriculaActionPerformed(evt);
+                btnBuscarVehiculosActionPerformed(evt);
             }
         });
 
-        txtMarca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMarcaActionPerformed(evt);
+        tblVehiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-
-        txtModelo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtModeloActionPerformed(evt);
-            }
-        });
-
-        btnRegistrar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnRegistrar.setForeground(new java.awt.Color(0, 0, 0));
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addGap(16, 16, 16)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addGap(113, 113, 113)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(38, 38, 38)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel1)
-                .addGap(23, 23, 23)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(btnRegistrar)
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-
-        btnVerAutos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnVerAutos.setForeground(new java.awt.Color(0, 0, 0));
-        btnVerAutos.setText("Ver automóviles");
-        btnVerAutos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerAutosActionPerformed(evt);
-            }
-        });
+        ));
+        jScrollPane2.setViewportView(tblVehiculos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(21, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar1)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnVerAutos)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCargar)
-                        .addGap(18, 18, 18))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 116, Short.MAX_VALUE)
+                        .addComponent(btnAgregar)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnEliminar)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnCargar)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnModificar1)
+                        .addGap(95, 95, 95))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscarVehiculos)
+                            .addComponent(boxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(275, 275, 275)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +191,19 @@ public class VistaClientesAutos extends javax.swing.JFrame {
                     .addComponent(btnAgregar)
                     .addComponent(btnEliminar)
                     .addComponent(btnModificar1)
-                    .addComponent(btnCargar)
-                    .addComponent(btnVerAutos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                    .addComponent(btnCargar))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(boxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnBuscarVehiculos))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -257,9 +218,8 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -274,8 +234,8 @@ public class VistaClientesAutos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,59 +258,159 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnModificar1ActionPerformed
-
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCargarActionPerformed
-
-    private void txtMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatriculaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatriculaActionPerformed
-
-    private void txtMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMarcaActionPerformed
-
-    private void txtModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModeloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtModeloActionPerformed
-
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        int seleccion = fileChooser.showOpenDialog(this);
 
-    private void btnVerAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAutosActionPerformed
-     int fila = tblDatos.getSelectedRow();
-if (fila != -1) {
-    String usuario = (String) tblDatos.getValueAt(fila, 2); // Asegúrate que la columna 2 sea el nombreUsuario
-    RegistroCliente cliente = ControladorRegistroCliente.getInstancia().buscarClientePorUsuario(usuario);
-    if (cliente != null) {
-        new VistaAutosPorCliente(cliente).setVisible(true);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            try {
+                File archivo = fileChooser.getSelectedFile();
+                String nombreArchivo = archivo.getName().toLowerCase();
+
+                if (nombreArchivo.endsWith(".tmca")) {
+                    cargarClientesYAutosDesdeArchivo(archivo);
+                } else {
+                    ControladorRegistroCliente.getInstancia().cargarClientesDesdeArchivo(archivo);
+                }
+                actualizarTablaClientes();
+                actualizarComboBoxClientes();
+                inicializarTablaVehiculos(); // Limpiar tabla vehiculos
+                JOptionPane.showMessageDialog(this, "Archivo cargado exitosamente.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error cargando archivo: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
+          int filaSeleccionada = tblDatos.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla para modificar.");
+        return;
     }
-}
-    
-    }//GEN-LAST:event_btnVerAutosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    // Obtenemos el DPI del cliente seleccionado
+    String dpiSeleccionado = (String) tblDatos.getValueAt(filaSeleccionada, 0);
+
+    // Buscar el cliente por DPI
+    RegistroCliente clienteSeleccionado = ControladorRegistroCliente.getInstancia().buscarClientePorDpi(dpiSeleccionado);
+    if (clienteSeleccionado == null) {
+        JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+        return;
+    }
+
+    // Abrir ventana para editar cliente
+    VistaEditarClienteAuto ventanaEdicion = new VistaEditarClienteAuto();
+    ventanaEdicion.setVisible(true);
+    }//GEN-LAST:event_btnModificar1ActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = tblDatos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar.");
+            return;
+        }
+        String dpi = (String) tblDatos.getValueAt(fila, 0); // columna del DPI
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            ControladorRegistroCliente.getInstancia().eliminarClientePorDpi(dpi);
+            actualizarTablaClientes();// Recargar la tabla
+            JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String nombre = JOptionPane.showInputDialog(this, "Ingrese el nombre completo del cliente:");
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return;
+        }
+
+        String dpi = JOptionPane.showInputDialog(this, "Ingrese el DPI del cliente:");
+        if (dpi == null || dpi.trim().isEmpty()) {
+            return;
+        }
+
+        String usuario = JOptionPane.showInputDialog(this, "Ingrese el nombre de usuario:");
+        if (usuario == null || usuario.trim().isEmpty()) {
+            return;
+        }
+
+        String contrasena = JOptionPane.showInputDialog(this, "Ingrese la contraseña:");
+        if (contrasena == null || contrasena.trim().isEmpty()) {
+            return;
+        }
+        RegistroCliente nuevoCliente = new RegistroCliente(nombre, dpi, usuario, contrasena);
+        ControladorRegistroCliente.getInstancia().agregarCliente(nuevoCliente);
+        actualizarTablaClientes();
+        actualizarComboBoxClientes();
+
+        JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente.");
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnBuscarVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculosActionPerformed
+    String seleccionado = (String) boxCliente.getSelectedItem();
+    if (seleccionado == null || seleccionado.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente primero.");
+        return;
+    }
+
+    // Extraer el DPI del texto del ComboBox
+    String dpiSeleccionado = seleccionado.split(" - ")[0].trim();
+
+    RegistroCliente cliente = ControladorRegistroCliente.getInstancia().buscarClientePorDpi(dpiSeleccionado);
+    if (cliente == null) {
+        JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+        return;
+    }
+
+    // Crear modelo de la tabla de vehículos
+    String[] columnas = {"Placa", "Marca", "Modelo"};
+    DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+
+    // Verificar qué tipo de colección devuelve getAutomoviles
+    Object vehiculos = cliente.getAutomoviles();
+    boolean hayVehiculos = false;
+    
+    if (vehiculos instanceof Automovil[]) {
+        // Si es un array de Automovil
+        Automovil[] autos = (Automovil[]) vehiculos;
+        for (Automovil auto : autos) {
+            if (auto != null) {
+                modelo.addRow(new Object[]{
+                    auto.getPlaca(),
+                    auto.getMarca(),
+                    auto.getModelo()
+                });
+                hayVehiculos = true;
+            }
+        }
+    } else if (vehiculos instanceof java.util.Collection) {
+        // Si es una colección (ArrayList, List, etc.)
+        java.util.Collection<Automovil> autos = (java.util.Collection<Automovil>) vehiculos;
+        for (Automovil auto : autos) {
+            if (auto != null) {
+                modelo.addRow(new Object[]{
+                    auto.getPlaca(),
+                    auto.getMarca(),
+                    auto.getModelo()
+                });
+                hayVehiculos = true;
+            }
+        }
+    }
+    
+    if (!hayVehiculos) {
+        JOptionPane.showMessageDialog(this, "Este cliente no tiene vehículos registrados.");
+    }
+
+    tblVehiculos.setModel(modelo);
+    }//GEN-LAST:event_btnBuscarVehiculosActionPerformed
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -372,8 +432,7 @@ if (fila != -1) {
             java.util.logging.Logger.getLogger(VistaClientesAutos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
+  
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VistaClientesAutos().setVisible(true);
@@ -382,25 +441,94 @@ if (fila != -1) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
+    private javax.swing.JComboBox<String> boxCliente;
+    public javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscarVehiculos;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar1;
-    private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton btnVerAutos;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tblDatos;
-    private javax.swing.JTextField txtMarca;
-    private javax.swing.JTextField txtMatricula;
-    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTable tblVehiculos;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarTablaClientes() {
+        String[] columnas = {"DPI", "Nombre", "Usuario"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(null, columnas);
+        for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
+            String[] fila = {
+                cliente.getDpi(),
+                cliente.getNombre(),
+                cliente.getNombreUsuario(),};
+            modelo.addRow(fila);
+        }
+        tblDatos.setModel(modelo);
+    }
+
+    private void actualizarComboBoxClientes() {
+        boxCliente.removeAllItems();
+        for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
+            boxCliente.addItem(cliente.getDpi() + " - " + cliente.getNombre());
+        }
+    }
+
+    private void inicializarTablaVehiculos() {
+        String[] columnas = {"Placa", "Marca", "Modelo"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        tblVehiculos.setModel(modelo);
+    }
+
+    private void cargarClientesYAutosDesdeArchivo(File archivo) throws Exception {
+    BufferedReader br = new BufferedReader(new FileReader(archivo));
+    String linea;
+
+    while ((linea = br.readLine()) != null) {
+        linea = linea.trim();
+        if (linea.isEmpty()) {
+            continue;
+        }
+
+        String[] partesPrincipales = linea.split("-", 6); // Limitar la división a 6 partes
+        if (partesPrincipales.length >= 5) {
+            String dpi = partesPrincipales[0].trim();
+            String nombre = partesPrincipales[1].trim();
+            String usuario = partesPrincipales[2].trim();
+            String contrasena = partesPrincipales[3].trim();
+            String tipo = partesPrincipales[4].trim();
+
+            RegistroCliente clienteActual = new RegistroCliente(nombre, dpi, usuario, contrasena);
+            clienteActual.setTipo(tipo);
+            
+            // Verificar si hay información de vehículos
+            if (partesPrincipales.length > 5) {
+                String infoVehiculos = partesPrincipales[5].trim();
+                // Los vehículos están separados por punto y coma
+                String[] vehiculos = infoVehiculos.split(";");
+                
+                for (String vehiculo : vehiculos) {
+                    String[] partesAuto = vehiculo.split(",");
+                    if (partesAuto.length >= 4) {
+                        String placa = partesAuto[0].trim();
+                        String marca = partesAuto[1].trim();
+                        String modelo = partesAuto[2].trim();
+                        String rutaFoto = partesAuto[3].trim();
+
+                        Automovil auto = new Automovil(placa, marca, modelo, rutaFoto);
+                        clienteActual.agregarAutomovil(auto);
+                        System.out.println("Agregado vehículo: " + placa + " a cliente: " + dpi);
+                    }
+                }
+            }
+            
+            ControladorRegistroCliente.getInstancia().agregarCliente(clienteActual);
+        }
+    }
+    br.close();
+}
 }

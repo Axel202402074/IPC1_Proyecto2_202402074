@@ -1,3 +1,4 @@
+
 package Modelo;
 
 import java.io.Serializable;
@@ -42,8 +43,8 @@ public class RegistroCliente implements Serializable {
     public int getServiciosRealizados() { return serviciosRealizados; }
     public void incrementarServicios() {
         serviciosRealizados++;
-        // Ascenso automático si llega a 5
-        if (serviciosRealizados >= 5 && !"Oro".equals(tipo)) {
+        // Ascenso automático si llega a 4
+        if (serviciosRealizados >= 4 && !"Oro".equals(tipo)) {
             tipo = "Oro";
             System.out.println("[ASCENSO] Cliente " + nombreUsuario + " ahora es Oro");
         }

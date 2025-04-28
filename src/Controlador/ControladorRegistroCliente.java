@@ -1,3 +1,4 @@
+
 package Controlador;
 
 import Modelo.RegistroCliente;
@@ -147,4 +148,75 @@ public class ControladorRegistroCliente {
         }
         if (actualizado) guardarDatos();
     }
+    
+    public void agregarCliente(RegistroCliente cliente) {
+    if (tamaño == capacidad) {
+        int nuevaCap = capacidad * 2;
+        if (nuevaCap == 0) nuevaCap = INICIAL_CAPACIDAD;
+        RegistroCliente[] tmp = new RegistroCliente[nuevaCap];
+        System.arraycopy(listaClientes, 0, tmp, 0, tamaño);
+        listaClientes = tmp;
+        capacidad = nuevaCap;
+    }
+    listaClientes[tamaño++] = cliente;
+    guardarDatos();
+}
+
+public RegistroCliente buscarClientePorDpi(String dpi) {
+    if (dpi == null || dpi.isEmpty()) return null;
+    for (int i = 0; i < tamaño; i++) {
+        if (listaClientes[i] != null && listaClientes[i].getDpi().equals(dpi)) {
+            return listaClientes[i];
+        }
+    }
+    return null;
+}
+    
+    
+    public void eliminarClientePorDpi(String dpi) {
+    for (int i = 0; i < tamaño; i++) {
+        if (listaClientes[i].getDpi().equals(dpi)) {
+            for (int j = i; j < tamaño - 1; j++) {
+                listaClientes[j] = listaClientes[j + 1];
+            }
+            tamaño--;
+            guardarDatos();
+            break;
+        }
+    }
+}
+
+
+public void cargarClientesDesdeArchivo(File archivo) throws IOException {
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split("-");
+            if (partes.length >= 5) {
+                String dpi = partes[0];
+                String nombre = partes[1];
+                String usuario = partes[2];
+                String contrasena = partes[3];
+                String tipoCliente = partes[4];
+
+                RegistroCliente nuevo = new RegistroCliente(nombre, dpi, usuario, contrasena);
+                nuevo.setTipo(tipoCliente);
+                agregarClienteDirectamente(nuevo); // Método que no pide validaciones
+            }
+        }
+    }
+    guardarDatos();
+}
+
+// Método de apoyo
+private void agregarClienteDirectamente(RegistroCliente cliente) {
+    if (tamaño == capacidad) {
+        int nuevaCap = capacidad * 2;
+        RegistroCliente[] tmp = new RegistroCliente[nuevaCap];
+        System.arraycopy(listaClientes, 0, tmp, 0, tamaño);
+        listaClientes = tmp;
+        capacidad = nuevaCap;
+    }
+    listaClientes[tamaño++] = cliente;
+}
 }

@@ -29,7 +29,7 @@ private void mostrarAutomoviles() {
         JOptionPane.showMessageDialog(this, "No tiene automóviles registrados.");
     } else {
         for (Automovil auto : cliente.getAutomoviles()) {
-            System.out.println("[AUTO] Placa: " + auto.getPlaca() +
+            System.out.println(" Placa: " + auto.getPlaca() +
                                ", Marca: " + auto.getMarca() +
                                ", Modelo: " + auto.getModelo());
         }
