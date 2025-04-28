@@ -36,6 +36,10 @@ public class RegistroCliente implements Serializable {
     public String getDpi() { return dpi; }
     public String getNombreUsuario() { return nombreUsuario; }
     public String getContrasena() { return contrasena; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setDpi(String dpi) { this.dpi = dpi; }
+    public void setNombreUsuario(String usuario) { this.nombreUsuario = usuario; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }
@@ -115,4 +119,6 @@ public Automovil getAutomovilPorPlaca(String placa) {
     return null;
 }
  
+
+
 }

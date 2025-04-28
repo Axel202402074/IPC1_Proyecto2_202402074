@@ -1,7 +1,9 @@
 
 package Vista;
 
+import Modelo.Automovil;
 import Modelo.RegistroCliente;
+import javax.swing.JOptionPane;
 
 
 public class VistaEditarClienteAuto extends javax.swing.JFrame {
@@ -34,10 +36,15 @@ public class VistaEditarClienteAuto extends javax.swing.JFrame {
     
     }
     
-    private void cargarVehiculos(){
-    String[] columnas =
-    
+   private void cargarVehiculos() {
+    boxVehiculo.removeAllItems();
+    for (Automovil auto : cliente.getAutomoviles()) {
+        if (auto != null) {
+            boxVehiculo.addItem(auto.getPlaca() + " - " + auto.getMarca() + " " + auto.getModelo());
+        }
     }
+}
+
     
     
     
@@ -100,6 +107,11 @@ public class VistaEditarClienteAuto extends javax.swing.JFrame {
         jLabel4.setText("Usuario");
 
         btnBuscarVehiculos.setText("Buscar datos");
+        btnBuscarVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarVehiculosActionPerformed(evt);
+            }
+        });
 
         boxVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -129,6 +141,11 @@ public class VistaEditarClienteAuto extends javax.swing.JFrame {
         jLabel8.setText("Modelo");
 
         btnGuardar.setText("Guardar cambios");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -163,27 +180,28 @@ public class VistaEditarClienteAuto extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCui, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(txtMarca)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NombreLayout.createSequentialGroup()
                         .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCui, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(NombreLayout.createSequentialGroup()
-                                .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addGap(45, 45, 45))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NombreLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(279, 279, 279))
         );
         NombreLayout.setVerticalGroup(
             NombreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,6 +298,57 @@ public class VistaEditarClienteAuto extends javax.swing.JFrame {
     private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPlacaActionPerformed
+
+    private void btnBuscarVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculosActionPerformed
+       String seleccionado = (String) boxVehiculo.getSelectedItem();
+    if (seleccionado == null || seleccionado.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un vehículo primero.");
+        return;
+    }
+
+    // Extraer la placa (antes del guión)
+    String placaSeleccionada = seleccionado.split("-")[0].trim();
+
+    // Buscar el automóvil con esa placa
+    Automovil vehiculo = cliente.getAutomovilPorPlaca(placaSeleccionada);
+
+    if (vehiculo != null) {
+        txtPlaca.setText(vehiculo.getPlaca());
+        txtMarca.setText(vehiculo.getMarca());
+        txtModelo.setText(vehiculo.getModelo());
+    } else {
+        JOptionPane.showMessageDialog(this, "Vehículo no encontrado.");
+    }
+    }//GEN-LAST:event_btnBuscarVehiculosActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       // Actualizar datos del cliente
+    cliente.setNombre(txtNombre.getText().trim());
+    cliente.setDpi(txtCui.getText().trim());
+    cliente.setNombreUsuario(txtUsuario.getText().trim());
+    cliente.setContrasena(txtContraseña.getText().trim());
+
+    // Actualizar datos del vehículo
+    String seleccionado = (String) boxVehiculo.getSelectedItem();
+    if (seleccionado != null && !seleccionado.isEmpty()) {
+        String placaOriginal = seleccionado.split("-")[0].trim();
+        Automovil vehiculo = cliente.getAutomovilPorPlaca(placaOriginal);
+
+        if (vehiculo != null) {
+            vehiculo.setPlaca(txtPlaca.getText().trim());
+            vehiculo.setMarca(txtMarca.getText().trim());
+            vehiculo.setModelo(txtModelo.getText().trim());
+        }
+    }
+
+    // Opcional: Si deseas guardar cambios persistidos inmediatamente
+    // ControladorRegistroCliente.getInstancia().guardarDatos(); (Si tienes este método)
+
+    JOptionPane.showMessageDialog(this, "Cambios guardados exitosamente.");
+    
+    // Actualizar el combo de vehículos después de cambios
+    cargarVehiculos();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -70,7 +70,7 @@ public class VistaClientesAutos extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -310,17 +310,21 @@ public class VistaClientesAutos extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int fila = tblDatos.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar.");
-            return;
-        }
-        String dpi = (String) tblDatos.getValueAt(fila, 0); // columna del DPI
-        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion == JOptionPane.YES_OPTION) {
-            ControladorRegistroCliente.getInstancia().eliminarClientePorDpi(dpi);
-            actualizarTablaClientes();// Recargar la tabla
-            JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
-        }
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente para eliminar.");
+        return;
+    }
+
+    String dpi = (String) tblDatos.getValueAt(fila, 0); // columna del DPI
+    int confirmacion = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        ControladorRegistroCliente.getInstancia().eliminarClientePorDpi(dpi);
+        actualizarTablaClientes();
+        actualizarComboBoxClientes();
+        inicializarTablaVehiculos(); // 👉 Limpiamos la tabla de vehículos
+        JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
+    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -471,12 +475,17 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         tblDatos.setModel(modelo);
     }
 
-    private void actualizarComboBoxClientes() {
-        boxCliente.removeAllItems();
-        for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
-            boxCliente.addItem(cliente.getDpi() + " - " + cliente.getNombre());
-        }
+private void actualizarComboBoxClientes() {
+    boxCliente.removeAllItems();
+    RegistroCliente[] clientes = ControladorRegistroCliente.getInstancia().getClientes();
+    
+    for (RegistroCliente cliente : clientes) {
+        boxCliente.addItem(cliente.getDpi() + " - " + cliente.getNombre());
     }
+
+    // Si ya no hay clientes, desactivar el botón
+    btnBuscarVehiculos.setEnabled(clientes.length > 0);
+}
 
     private void inicializarTablaVehiculos() {
         String[] columnas = {"Placa", "Marca", "Modelo"};

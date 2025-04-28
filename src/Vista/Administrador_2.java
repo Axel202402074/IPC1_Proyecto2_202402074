@@ -35,7 +35,7 @@ public class Administrador_2 extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -193,7 +193,8 @@ public class Administrador_2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesyAutosActionPerformed
 
     private void btnRepuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepuestosActionPerformed
-        // TODO add your handling code here:
+        VistaRepuestos nuevaVista =new VistaRepuestos();
+        nuevaVista.setVisible(true);
     }//GEN-LAST:event_btnRepuestosActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
