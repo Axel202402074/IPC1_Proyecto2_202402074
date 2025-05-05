@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.ControladorAutomovil;
 import Modelo.Automovil;
 import Modelo.RegistroCliente;
 import javax.swing.JOptionPane;
@@ -12,7 +13,7 @@ private RegistroCliente cliente;
         initComponents();
         this.setTitle("Cliente");
         this.setLocationRelativeTo(null);
-        // Note: Since no client is provided, we can't show automobiles
+       
     }
 
     public Cliente_3(RegistroCliente cliente) {
@@ -20,11 +21,11 @@ private RegistroCliente cliente;
         this.cliente = cliente;
         this.setTitle("Cliente: " + cliente.getNombre());
         this.setLocationRelativeTo(null);
-        mostrarAutomoviles();
+        //mostrarAutomoviles();
         
     }
 
-private void mostrarAutomoviles() {
+/*private void mostrarAutomoviles() {
     if (cliente.getCantidadAutos() == 0) {
         JOptionPane.showMessageDialog(this, "No tiene automóviles registrados.");
     } else {
@@ -33,9 +34,9 @@ private void mostrarAutomoviles() {
                                ", Marca: " + auto.getMarca() +
                                ", Modelo: " + auto.getModelo());
         }
-        // Aquí podrías llenar una JTable con los autos
+     
     }
-}
+}*/
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -44,11 +45,11 @@ private void mostrarAutomoviles() {
         btnReportes1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        btnServicios = new javax.swing.JButton();
-        btnRepuestos = new javax.swing.JButton();
-        btnReportes = new javax.swing.JButton();
-        btnReportes2 = new javax.swing.JButton();
+        btnCerrarSesion = new javax.swing.JButton();
+        btnVerMisAutos = new javax.swing.JButton();
+        btnRegistrarAutomovil = new javax.swing.JButton();
+        btnVerProgreso = new javax.swing.JButton();
+        btnFacturas = new javax.swing.JButton();
 
         btnReportes1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         btnReportes1.setForeground(new java.awt.Color(0, 0, 0));
@@ -65,46 +66,46 @@ private void mostrarAutomoviles() {
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 153));
 
-        jButton1.setText("Cerrar Sesion");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCerrarSesionActionPerformed(evt);
             }
         });
 
-        btnServicios.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnServicios.setForeground(new java.awt.Color(0, 0, 0));
-        btnServicios.setText("Ver mis automoviles");
-        btnServicios.addActionListener(new java.awt.event.ActionListener() {
+        btnVerMisAutos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnVerMisAutos.setForeground(new java.awt.Color(0, 0, 0));
+        btnVerMisAutos.setText("Ver mis automoviles");
+        btnVerMisAutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnServiciosActionPerformed(evt);
+                btnVerMisAutosActionPerformed(evt);
             }
         });
 
-        btnRepuestos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnRepuestos.setForeground(new java.awt.Color(0, 0, 0));
-        btnRepuestos.setText("Registrar automovil");
-        btnRepuestos.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarAutomovil.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnRegistrarAutomovil.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegistrarAutomovil.setText("Registrar automovil");
+        btnRegistrarAutomovil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRepuestosActionPerformed(evt);
+                btnRegistrarAutomovilActionPerformed(evt);
             }
         });
 
-        btnReportes.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnReportes.setForeground(new java.awt.Color(0, 0, 0));
-        btnReportes.setText("Ver progreso");
-        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+        btnVerProgreso.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnVerProgreso.setForeground(new java.awt.Color(0, 0, 0));
+        btnVerProgreso.setText("Ver progreso");
+        btnVerProgreso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReportesActionPerformed(evt);
+                btnVerProgresoActionPerformed(evt);
             }
         });
 
-        btnReportes2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnReportes2.setForeground(new java.awt.Color(0, 0, 0));
-        btnReportes2.setText("Facturas");
-        btnReportes2.addActionListener(new java.awt.event.ActionListener() {
+        btnFacturas.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnFacturas.setForeground(new java.awt.Color(0, 0, 0));
+        btnFacturas.setText("Facturas");
+        btnFacturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReportes2ActionPerformed(evt);
+                btnFacturasActionPerformed(evt);
             }
         });
 
@@ -114,32 +115,32 @@ private void mostrarAutomoviles() {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnRepuestos, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(139, 139, 139)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReportes2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(btnRegistrarAutomovil, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
+                    .addComponent(btnVerProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(109, 109, 109)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnVerMisAutos, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(btnFacturas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jButton1)
+                .addComponent(btnCerrarSesion)
                 .addGap(50, 50, 50)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRepuestos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRegistrarAutomovil, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerMisAutos, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReportes2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVerProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62))
         );
 
@@ -177,33 +178,36 @@ private void mostrarAutomoviles() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
          Login_1 nuevaVista = new Login_1();
-       nuevaVista.setVisible(true);    }//GEN-LAST:event_jButton1ActionPerformed
+       nuevaVista.setVisible(true);    }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void btnServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiciosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnServiciosActionPerformed
+    private void btnVerMisAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMisAutosActionPerformed
+        VistaVerMisAutomoviles nuevaVista =new VistaVerMisAutomoviles();
+        nuevaVista.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVerMisAutosActionPerformed
 
-    private void btnRepuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepuestosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRepuestosActionPerformed
+    private void btnRegistrarAutomovilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAutomovilActionPerformed
+        VistaRegistrarAutomovil nuevaVista =new VistaRegistrarAutomovil();     
+    nuevaVista.setVisible(true);
+    this.dispose();
 
-    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+    }//GEN-LAST:event_btnRegistrarAutomovilActionPerformed
+
+    private void btnVerProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProgresoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReportesActionPerformed
+    }//GEN-LAST:event_btnVerProgresoActionPerformed
 
     private void btnReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportes1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportes1ActionPerformed
 
-    private void btnReportes2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportes2ActionPerformed
+    private void btnFacturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnReportes2ActionPerformed
+    }//GEN-LAST:event_btnFacturasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -237,12 +241,12 @@ private void mostrarAutomoviles() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnFacturas;
+    private javax.swing.JButton btnRegistrarAutomovil;
     private javax.swing.JButton btnReportes1;
-    private javax.swing.JButton btnReportes2;
-    private javax.swing.JButton btnRepuestos;
-    private javax.swing.JButton btnServicios;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVerMisAutos;
+    private javax.swing.JButton btnVerProgreso;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

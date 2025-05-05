@@ -22,7 +22,7 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         inicializarTablaVehiculos();
     }
 
-    private void cargarClientesTabla() {
+    void cargarClientesTabla() {
         String[] columnas = {"DPI", "Nombre", "Usuario"};
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(null, columnas);
         for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
@@ -36,7 +36,7 @@ public class VistaClientesAutos extends javax.swing.JFrame {
         tblDatos.setModel(modelo);
     }
 
-    private void cargarClientesComboBox() {
+    void cargarClientesComboBox() {
         boxCliente.removeAllItems();
         for (RegistroCliente cliente : ControladorRegistroCliente.getInstancia().getClientes()) {
             boxCliente.addItem(cliente.getDpi() + " - " + cliente.getNombre());
@@ -74,9 +74,9 @@ public class VistaClientesAutos extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 153));
 
-        jPanel3.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 153));
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -287,25 +287,19 @@ public class VistaClientesAutos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-          int filaSeleccionada = tblDatos.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla para modificar.");
+int fila = tblDatos.getSelectedRow();
+    if (fila < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un cliente para modificar.");
         return;
     }
-
-    // Obtenemos el DPI del cliente seleccionado
-    String dpiSeleccionado = (String) tblDatos.getValueAt(filaSeleccionada, 0);
-
-    // Buscar el cliente por DPI
-    RegistroCliente clienteSeleccionado = ControladorRegistroCliente.getInstancia().buscarClientePorDpi(dpiSeleccionado);
-    if (clienteSeleccionado == null) {
-        JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+    String dpi = tblDatos.getValueAt(fila, 0).toString();
+    RegistroCliente cliente = ControladorRegistroCliente.getInstancia().buscarClientePorDpi(dpi);
+    if (cliente == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró el cliente.");
         return;
     }
-
-    // Abrir ventana para editar cliente
-    VistaEditarClienteAuto ventanaEdicion = new VistaEditarClienteAuto();
-    ventanaEdicion.setVisible(true);
+    VistaEditarClienteAuto editar = new VistaEditarClienteAuto(cliente, this);
+    editar.setVisible(true);
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -487,7 +481,7 @@ private void actualizarComboBoxClientes() {
     btnBuscarVehiculos.setEnabled(clientes.length > 0);
 }
 
-    private void inicializarTablaVehiculos() {
+    void inicializarTablaVehiculos() {
         String[] columnas = {"Placa", "Marca", "Modelo"};
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         tblVehiculos.setModel(modelo);
@@ -540,4 +534,13 @@ private void actualizarComboBoxClientes() {
     }
     br.close();
 }
+    
+    public void recargarDatos() {
+    cargarClientesTabla();
+    cargarClientesComboBox();
+    inicializarTablaVehiculos();
+}
+    
+    
+    
 }

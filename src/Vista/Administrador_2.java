@@ -184,11 +184,12 @@ public class Administrador_2 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiciosActionPerformed
-        // TODO add your handling code here:
+    VistaServicios nuevaVista = new VistaServicios();
+    nuevaVista.setVisible(true);
     }//GEN-LAST:event_btnServiciosActionPerformed
 
     private void btnClientesyAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesyAutosActionPerformed
-    VistaClientesAutos nuevaVista = new VistaClientesAutos();        // TODO add your handling code here:
+    VistaClientesAutos nuevaVista = new VistaClientesAutos();       
      nuevaVista.setVisible(true);
     }//GEN-LAST:event_btnClientesyAutosActionPerformed
 
@@ -202,7 +203,8 @@ public class Administrador_2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnProgresosAutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgresosAutosActionPerformed
-        // TODO add your handling code here:
+    VistaProgresoAutos nuevaVista = new VistaProgresoAutos();       
+    nuevaVista.setVisible(true);
     }//GEN-LAST:event_btnProgresosAutosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed

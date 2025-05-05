@@ -1,7 +1,12 @@
 
 package Modelo;
 
+import java.io.File;
 import java.io.Serializable;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class RegistroCliente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,6 +35,16 @@ public class RegistroCliente implements Serializable {
         this.automoviles = new Automovil[5];
         this.cantidadAutos = 0;
     }
+    public RegistroCliente() {
+    this.nombre = "";
+    this.dpi = "";
+    this.nombreUsuario = "";
+    this.contrasena = "";
+    this.tipo = "Normal";
+    this.serviciosRealizados = 0;
+    this.automoviles = new Automovil[5];
+    this.cantidadAutos = 0;
+}
 
     // Getters / Setters básicos
     public String getNombre() { return nombre; }
@@ -120,5 +135,19 @@ public Automovil getAutomovilPorPlaca(String placa) {
 }
  
 
+public void guardarEnArchivo() {
+   File carpeta = new File("clientes");
+if (!carpeta.exists()) {
+    carpeta.mkdir(); // crea la carpeta
+}
+    
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("clientes/" + nombreUsuario + ".dat"))) {
+        out.writeObject(this);
+        System.out.println("[GUARDADO] Cliente guardado en archivo.");
+    } catch (IOException e) {
+        e.printStackTrace();
+        System.out.println("[ERROR] No se pudo guardar el cliente.");
+    }
+}
 
 }

@@ -16,14 +16,24 @@ public class VistaRepuestos extends javax.swing.JFrame {
  public VistaRepuestos() {
     initComponents();
     this.setLocationRelativeTo(null);
-    this.setTitle("Gestión de Repuestos");
-
-    // CORRECTO: primero inicializas el modelo
-    modeloTabla = new DefaultTableModel(new String[]{"ID", "Nombre", "Marca", "Modelo", "Existencias", "Precio"}, 0);
+    this.setTitle("Repuestos");
+ modeloTabla = new DefaultTableModel(new String[]{"ID","Nombre","Marca","Modelo","Existencias","Precio"}, 0);
     tabla.setModel(modeloTabla);
-
-    // Luego cargas la tabla
     cargarTabla();
+
+    // >>> Cuando el usuario seleccione otra fila, se llenan los txt:
+    tabla.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            int fila = tabla.getSelectedRow();
+            if (fila >= 0) {
+                txtNombre.setText( modeloTabla.getValueAt(fila,1).toString() );
+                txtMarca.setText( modeloTabla.getValueAt(fila,2).toString() );
+                txtModelo.setText( modeloTabla.getValueAt(fila,3).toString() );
+                txtExistencias.setText( modeloTabla.getValueAt(fila,4).toString() );
+                txtPrecio.setText( modeloTabla.getValueAt(fila,5).toString() );
+            }
+        }
+    });
 }
     
       private void cargarTabla() {
@@ -91,7 +101,7 @@ public class VistaRepuestos extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel2.setBackground(new java.awt.Color(255, 204, 153));
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -227,9 +237,8 @@ public class VistaRepuestos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCargar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(62, 62, 62))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +374,7 @@ public class VistaRepuestos extends javax.swing.JFrame {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Existencias o precio inválido.");
             }
-        
+        limpiarCampos();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -374,30 +383,26 @@ public class VistaRepuestos extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Seleccione un repuesto para modificar.");
         return;
     }
-
     try {
         String id = modeloTabla.getValueAt(fila, 0).toString();
-        String nombre = txtNombre.getText();
-        String marca = txtMarca.getText();
-        String modelo = txtModelo.getText();
-        int existencias = Integer.parseInt(txtExistencias.getText());
-        double precio = Double.parseDouble(txtPrecio.getText());
+        String nombre = txtNombre.getText().trim();
+        String marca  = txtMarca.getText().trim();
+        String modelo = txtModelo.getText().trim();
+        int exist    = Integer.parseInt(txtExistencias.getText().trim());
+        double precio = Double.parseDouble(txtPrecio.getText().trim());
 
         if (nombre.isEmpty() || marca.isEmpty() || modelo.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
             return;
         }
 
-        controlador.modificarRepuesto(id, nombre, marca, modelo, existencias, precio);
+        controlador.modificarRepuesto(id, nombre, marca, modelo, exist, precio);
         cargarTabla();
-
-        txtNombre.setText(""); txtMarca.setText(""); txtModelo.setText("");
-        txtExistencias.setText(""); txtPrecio.setText("");
-
         JOptionPane.showMessageDialog(this, "Repuesto modificado correctamente.");
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(this, "Existencias o precio inválido.");
     }
+    limpiarCampos();
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -410,6 +415,7 @@ public class VistaRepuestos extends javax.swing.JFrame {
             String id = modeloTabla.getValueAt(fila, 0).toString();
             controlador.eliminarRepuesto(id);
             cargarTabla();
+            limpiarCampos();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
@@ -491,4 +497,15 @@ public class VistaRepuestos extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+
+private void limpiarCampos() {
+  txtNombre.setText("");
+  txtMarca.setText("");
+  txtModelo.setText("");
+  txtExistencias.setText("");
+  txtPrecio.setText("");
+  tabla.clearSelection();
+}
+
+
 }

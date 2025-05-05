@@ -206,7 +206,7 @@ public class RegistrarCliente extends javax.swing.JFrame {
             new Login_1().setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Error: Usuario ya existe o contraseñas no coinciden.");
+            JOptionPane.showMessageDialog(this, "EUsuario ya existe o contraseñas no coinciden.");
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 

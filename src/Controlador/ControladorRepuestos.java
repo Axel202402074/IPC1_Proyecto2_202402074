@@ -13,6 +13,21 @@ public class ControladorRepuestos {
     private ControladorRepuestos() {
         cargar();
     }
+public void imprimirRepuestosCargados() {
+    System.out.println("=== Repuestos Cargados ===");
+    for (int i = 0; i < tamaño; i++) {
+        Repuesto r = inventario[i];
+        if (r != null) {
+            System.out.println("ID: " + r.getId() +
+                               ", Nombre: " + r.getNombre() +
+                               ", Marca: " + r.getMarca() +
+                               ", Modelo: " + r.getModelo() +
+                               ", Existencias: " + r.getExistencias() +
+                               ", Precio: " + r.getPrecio());
+        }
+    }
+    System.out.println("===========================");
+}
 
     public static ControladorRepuestos getInstancia() {
         if (instancia == null) instancia = new ControladorRepuestos();
@@ -25,30 +40,28 @@ public class ControladorRepuestos {
             System.arraycopy(inventario, 0, nuevo, 0, tamaño);
             inventario = nuevo;
         }
-        String idGenerado = "2025AD" + idActual++;
+        String idGenerado = "R" + idActual++;
         inventario[tamaño++] = new Repuesto(idGenerado, nombre, marca, modelo, existencias, precio);
         guardar();
     }
 
     public void modificarRepuesto(String id, String nombre, String marca, String modelo, int existencias, double precio) {
-    for (int i = 0; i < tamaño; i++) {
-        if (inventario[i].getId() == id) {
-            inventario[i].setNombre(nombre);
-            inventario[i].setMarca(marca);
-            inventario[i].setModelo(modelo);
-            inventario[i].setExistencias(existencias);
-            inventario[i].setPrecio(precio);
-            guardar();
-            break;
+        for (int i = 0; i < tamaño; i++) {
+            if (inventario[i].getId().equals(id)) {
+                inventario[i].setNombre(nombre);
+                inventario[i].setMarca(marca);
+                inventario[i].setModelo(modelo);
+                inventario[i].setExistencias(existencias);
+                inventario[i].setPrecio(precio);
+                guardar();
+                break;
+            }
         }
     }
-}
 
-   
-    
     public void eliminarRepuesto(String id) {
         for (int i = 0; i < tamaño; i++) {
-            if (inventario[i].getId() == id) {
+            if (inventario[i].getId().equals(id)) {
                 for (int j = i; j < tamaño - 1; j++) {
                     inventario[j] = inventario[j + 1];
                 }
@@ -63,6 +76,25 @@ public class ControladorRepuestos {
         Repuesto[] copia = new Repuesto[tamaño];
         System.arraycopy(inventario, 0, copia, 0, tamaño);
         return copia;
+    }
+
+    public Repuesto[] getRepuestosPorMarcaModelo(String marca, String modelo) {
+        int contador = 0;
+        for (int i = 0; i < tamaño; i++) {
+            if (inventario[i].getMarca().equalsIgnoreCase(marca)
+                    && inventario[i].getModelo().equalsIgnoreCase(modelo)) {
+                contador++;
+            }
+        }
+        Repuesto[] compatibles = new Repuesto[contador];
+        int index = 0;
+        for (int i = 0; i < tamaño; i++) {
+            if (inventario[i].getMarca().equalsIgnoreCase(marca)
+                    && inventario[i].getModelo().equalsIgnoreCase(modelo)) {
+                compatibles[index++] = inventario[i];
+            }
+        }
+        return compatibles;
     }
 
     public void guardar() {
@@ -87,7 +119,6 @@ public class ControladorRepuestos {
         }
     }
 
-    // Carga desde archivo .tmr
     public void cargarDesdeArchivo(String ruta) {
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String linea;

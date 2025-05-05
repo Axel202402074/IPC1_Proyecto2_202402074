@@ -12,7 +12,7 @@ public class Proyecto_2_TallerAutomotriz {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_1().setVisible(true);
+                new Cliente_3().setVisible(true);
 
             }
         });

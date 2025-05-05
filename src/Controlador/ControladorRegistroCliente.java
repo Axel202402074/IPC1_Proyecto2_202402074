@@ -73,7 +73,7 @@ public class ControladorRegistroCliente {
 }
     
     
-    private void guardarDatos() {
+    public void guardarDatos() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("clientes.dat"))) {
             oos.writeInt(tamaño);
             for (int i = 0; i < tamaño; i++) {
